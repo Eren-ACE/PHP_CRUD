@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadline Countdown</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #111; font-family: Arial, sans-serif; }
+        .container { position: relative; text-align: center; color: white; }
+        .progress-bar { width: 500px; height: 20px; background: white; border-radius: 10px; position: relative; overflow: hidden; }
+        .progress { width: 100%; height: 100%; background: red; transition: width linear; border-radius: 10px; }
+        .reaper { position: absolute; left: 0; top: -50px; transition: left linear; }
+        .worker { position: absolute; right: 0; top: -50px; }
+        #countdown { margin-top: 10px; font-size: 18px; color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Grim_reaper.png" width="50" class="reaper" id="reaper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Computer-user.svg" width="50" class="worker">
+        </div>
+        <div id="countdown">Deadline: <span id="time-left">10</span></div>
+    </div>
+
+    <script>
+        let timeLeft = 10;
+        const progress = document.getElementById("progress");
+        const countdown = document.getElementById("time-left");
+        const reaper = document.getElementById("reaper");
+
+        function startCountdown() {
+            let interval = setInterval(() => {
+                timeLeft--;
+                countdown.textContent = timeLeft;
+                progress.style.width = (timeLeft / 10) * 100 + "%";
+                reaper.style.left = (100 - (timeLeft / 10) * 100) + "%";
+                
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    countdown.textContent = "Time's Up!";
+                }
+            }, 1000);
+        }
+
+        startCountdown();
+    </script>
+</body>
+</html>
